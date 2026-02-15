@@ -1,0 +1,27 @@
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# Build outputs
+dist/
+build/
+Library-manager-frontend/build/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Project specific diagnostic/temp files
+Library-manager-backend/diagnosis_output.txt
+Library-manager-backend/diagnosis_output_clean.txt
+Library-manager-backend/list_models.js
+Library-manager-backend/models_list.json
+Library-manager-backend/test_gemini.js
+Library-manager-backend/test_output.txt
+Library-manager-backend/test_result.json

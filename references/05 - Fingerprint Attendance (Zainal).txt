@@ -1,0 +1,4 @@
+[5] N. I. Zainal et al., “Design and development of portable classroom attendance system based on Arduino and fingerprint biometric,” in ICT4M, 2014, pp. 1–4.
+
+Link: https://www.researchgate.net/publication/283489823_Design_and_development_of_portable_classroom_attendance_system_based_on_Arduino_and_fingerprint_biometric
+IEEE Xplore: https://ieeexplore.ieee.org/document/7036980

@@ -29,6 +29,11 @@ function Students() {
   });
   const [bulkData, setBulkData] = useState('');
 
+  // AI Analysis State
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+
   const showAlert = (message, type) => {
     setAlert({ message, type });
     setTimeout(() => setAlert({ message: '', type: '' }), 5000);
@@ -57,7 +62,7 @@ function Students() {
     }
     setSortConfig({ key, direction });
   };
-  
+
   const getSortedStudents = () => {
     let filtered = students.filter(student =>
       student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -73,7 +78,7 @@ function Students() {
     }
     return filtered;
   };
-  
+
   const handleAddStudent = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -89,7 +94,7 @@ function Students() {
       setLoading(false);
     }
   };
-  
+
   const handleEditStudent = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -132,7 +137,7 @@ function Students() {
     });
     setShowEditModal(true);
   };
-  
+
   const handleBulkUpload = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -150,12 +155,28 @@ function Students() {
     }
   };
 
+  const handleAnalyze = async (student) => {
+    setAiLoading(true);
+    setAiSuggestion('');
+    setShowAiModal(true);
+    setCurrentStudent(student);
+    try {
+      const data = await api.analyzeStudent(student.cardId);
+      setAiSuggestion(data.suggestion);
+    } catch (error) {
+      setAiSuggestion('Error generating analysis. Please try again.');
+      showAlert('AI Error: ' + error.message, 'error');
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   const sortedStudents = getSortedStudents();
 
   return (
     <div className="page-content">
       <Alert message={alert.message} type={alert.type} onClose={() => setAlert({ message: '', type: '' })} />
-      
+
       <div className="page-header">
         <h1>👥 Students Management</h1>
         <div className="header-actions">
@@ -180,24 +201,25 @@ function Students() {
       {loading ? (
         <div className="loader">Loading...</div>
       ) : (
-        <StudentTable 
+        <StudentTable
           students={sortedStudents}
           sortConfig={sortConfig}
           onSort={handleSort}
           onEdit={openEditModal}
           onDelete={handleDeleteStudent}
+          onAnalyze={handleAnalyze}
         />
       )}
-      
+
       {/* Modals */}
       <Modal isOpen={showAddModal} onClose={() => setShowAddModal(false)} title="Add New Student">
         <form onSubmit={handleAddStudent} className="form">
-           <div className="form-group"><label>Roll Number *</label><input type="text" required value={formData.rollNumber} onChange={(e) => setFormData({...formData, rollNumber: e.target.value})} /></div>
-           <div className="form-group"><label>Card ID *</label><input type="text" required value={formData.cardId} onChange={(e) => setFormData({...formData, cardId: e.target.value})} /></div>
-           <div className="form-group"><label>Name *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} /></div>
-           <div className="form-group"><label>Branch *</label><input type="text" required value={formData.branch} onChange={(e) => setFormData({...formData, branch: e.target.value})} /></div>
-           <div className="form-group"><label>Mobile *</label><input type="tel" required value={formData.mobile} onChange={(e) => setFormData({...formData, mobile: e.target.value})} /></div>
-           <div className="form-group"><label>Email *</label><input type="email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} /></div>
+          <div className="form-group"><label>Roll Number *</label><input type="text" required value={formData.rollNumber} onChange={(e) => setFormData({ ...formData, rollNumber: e.target.value })} /></div>
+          <div className="form-group"><label>Card ID *</label><input type="text" required value={formData.cardId} onChange={(e) => setFormData({ ...formData, cardId: e.target.value })} /></div>
+          <div className="form-group"><label>Name *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></div>
+          <div className="form-group"><label>Branch *</label><input type="text" required value={formData.branch} onChange={(e) => setFormData({ ...formData, branch: e.target.value })} /></div>
+          <div className="form-group"><label>Mobile *</label><input type="tel" required value={formData.mobile} onChange={(e) => setFormData({ ...formData, mobile: e.target.value })} /></div>
+          <div className="form-group"><label>Email *</label><input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} /></div>
           <div className="form-actions">
             <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancel</button>
             <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Adding...' : 'Add Student'}</button>
@@ -207,12 +229,12 @@ function Students() {
 
       <Modal isOpen={showEditModal} onClose={() => setShowEditModal(false)} title="Edit Student">
         <form onSubmit={handleEditStudent} className="form">
-           <div className="form-group"><label>Roll Number *</label><input type="text" required value={formData.rollNumber} onChange={(e) => setFormData({...formData, rollNumber: e.target.value})} /></div>
-           <div className="form-group"><label>Card ID *</label><input type="text" required value={formData.cardId} onChange={(e) => setFormData({...formData, cardId: e.target.value})} /></div>
-           <div className="form-group"><label>Name *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} /></div>
-           <div className="form-group"><label>Branch *</label><input type="text" required value={formData.branch} onChange={(e) => setFormData({...formData, branch: e.target.value})} /></div>
-           <div className="form-group"><label>Mobile *</label><input type="tel" required value={formData.mobile} onChange={(e) => setFormData({...formData, mobile: e.target.value})} /></div>
-           <div className="form-group"><label>Email *</label><input type="email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} /></div>
+          <div className="form-group"><label>Roll Number *</label><input type="text" required value={formData.rollNumber} onChange={(e) => setFormData({ ...formData, rollNumber: e.target.value })} /></div>
+          <div className="form-group"><label>Card ID *</label><input type="text" required value={formData.cardId} onChange={(e) => setFormData({ ...formData, cardId: e.target.value })} /></div>
+          <div className="form-group"><label>Name *</label><input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /></div>
+          <div className="form-group"><label>Branch *</label><input type="text" required value={formData.branch} onChange={(e) => setFormData({ ...formData, branch: e.target.value })} /></div>
+          <div className="form-group"><label>Mobile *</label><input type="tel" required value={formData.mobile} onChange={(e) => setFormData({ ...formData, mobile: e.target.value })} /></div>
+          <div className="form-group"><label>Email *</label><input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} /></div>
           <div className="form-actions">
             <button type="button" className="btn btn-secondary" onClick={() => setShowEditModal(false)}>Cancel</button>
             <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Updating...' : 'Update Student'}</button>
@@ -230,7 +252,7 @@ function Students() {
               placeholder='[{"rollNumber":"101","cardId":"C001","name":"John Doe","branch":"CSE","mobile":"1234567890","email":"john@example.com"}]'
               value={bulkData}
               onChange={(e) => setBulkData(e.target.value)}
-              style={{fontFamily: 'monospace', fontSize: '12px'}}
+              style={{ fontFamily: 'monospace', fontSize: '12px' }}
             />
           </div>
           <div className="form-actions">
@@ -238,8 +260,27 @@ function Students() {
             <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Uploading...' : 'Upload Students'}</button>
           </div>
         </form>
+
       </Modal>
-    </div>
+
+      <Modal isOpen={showAiModal} onClose={() => setShowAiModal(false)} title={`🤖 AI Study Coach: ${currentStudent?.name || ''}`}>
+        <div style={{ padding: '20px', lineHeight: '1.6' }}>
+          {aiLoading ? (
+            <div style={{ textAlign: 'center', color: '#666' }}>
+              <p>🧠 Crunching the numbers...</p>
+              <p>Analyzing attendance patterns to generate personalized advice.</p>
+            </div>
+          ) : (
+            <div style={{ whiteSpace: 'pre-wrap' }}>
+              {aiSuggestion}
+            </div>
+          )}
+        </div>
+        <div className="form-actions">
+          <button type="button" className="btn btn-primary" onClick={() => setShowAiModal(false)}>Close</button>
+        </div>
+      </Modal>
+    </div >
   );
 }
 

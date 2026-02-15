@@ -1,0 +1,4 @@
+[6] T. L. Jacobs, “Limitations of Vision-Based Driver Monitoring Systems Under Variable Environmental Conditions,” Transportation Research Part F: Traffic Psychology and Behaviour, vol. 58, pp. 245–255, 2018.
+
+DOI: https://doi.org/10.1016/j.trf.2018.06.014
+Link: https://www.sciencedirect.com/science/article/pii/S136984781830206X

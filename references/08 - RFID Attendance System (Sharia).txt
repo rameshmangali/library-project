@@ -1,0 +1,4 @@
+[8] M. N. H. Sharia and A. K. M. A. Haque, “RFID based attendance system,” in 2016 5th International Conference on Informatics, Electronics and Vision (ICIEV), 2016, pp. 463–467.
+
+IEEE Xplore: https://ieeexplore.ieee.org/document/7760050
+DOI: 10.1109/ICIEV.2016.7760050

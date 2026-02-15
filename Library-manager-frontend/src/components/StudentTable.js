@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StudentTable({ students, sortConfig, onSort, onEdit, onDelete }) {
+function StudentTable({ students, sortConfig, onSort, onEdit, onDelete, onAnalyze }) {
   return (
     <div className="table-container">
       <table className="data-table">
@@ -33,6 +33,9 @@ function StudentTable({ students, sortConfig, onSort, onEdit, onDelete }) {
               <td>{student.mobile}</td>
               <td>{student.email}</td>
               <td>
+                <button className="btn-icon btn-ai" onClick={() => onAnalyze(student)} title="AI Analyze" style={{ marginRight: '5px' }}>
+                  🤖
+                </button>
                 <button className="btn-icon btn-edit" onClick={() => onEdit(student)} title="Edit">
                   ✏️
                 </button>

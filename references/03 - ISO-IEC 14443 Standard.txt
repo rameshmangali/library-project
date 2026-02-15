@@ -1,0 +1,6 @@
+[3] ISO/IEC, “ISO/IEC 14443 Identification cards – Contactless integrated circuit cards – Proximity cards,” International Organization for Standardization, 2020. 
+
+Official Source: https://www.iso.org/standard/73599.html
+Preview/Details: https://www.iso.org/obp/ui/#iso:std:iso-iec:14443:-1:ed-4:v1:en
+
+Note: International standards are typically paywalled.

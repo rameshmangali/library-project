@@ -1,0 +1,9 @@
+node_modules/
+.env
+diagnosis_output.txt
+diagnosis_output_clean.txt
+list_models.js
+models_list.json
+test_gemini.js
+test_output.txt
+test_result.json

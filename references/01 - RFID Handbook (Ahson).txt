@@ -1,0 +1,6 @@
+[1] S. A. Ahson and M. Ilyas, RFID Handbook: Applications, Technology, Security, and Privacy. CRC Press, 2017.
+
+Official Source: https://www.taylorfrancis.com/books/edit/10.1201/9781315221977/rfid-handbook-syed-ahson-mohammad-ilyas
+Alternative: https://www.routledge.com/RFID-Handbook-Applications-Technology-Security-and-Privacy/Ahson-Ilyas/p/book/9781138072527
+
+Note: This is a textbook and may require institutional access or purchase.
