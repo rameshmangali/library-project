@@ -1,5 +1,5 @@
 import express from "express";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import Attendance from "../models/attendanceModel.js";
 import Student from "../models/studentModel.js";
 
@@ -35,9 +35,9 @@ router.get("/analyze/:cardId", async (req, res) => {
             return `- ${date}: Spent ${duration}`;
         }).join("\n");
 
-        const apiKey = process.env.GEMINI_API_KEY;
+        const apiKey = process.env.GROQ_API_KEY;
         if (!apiKey || apiKey.startsWith("PASTE")) {
-            return res.status(500).json({ message: "Server Error: GEMINI_API_KEY is missing or invalid in .env file." });
+            return res.status(500).json({ message: "Server Error: GROQ_API_KEY is missing or invalid in .env file." });
         }
 
         const prompt = `
@@ -53,18 +53,19 @@ router.get("/analyze/:cardId", async (req, res) => {
       Output as plain text, no markdown formatting.
     `;
 
-        // 4. Call Gemini AI
-        console.log("🤖 Initializing Gemini with Key: ", process.env.GEMINI_API_KEY ? "Present (Starts with " + process.env.GEMINI_API_KEY.substring(0, 5) + ")" : "Missing");
+        // 4. Call Groq AI
+        console.log("🤖 Initializing Groq with Key: ", process.env.GROQ_API_KEY ? "Present (Starts with " + process.env.GROQ_API_KEY.substring(0, 5) + ")" : "Missing");
 
-        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        // Switch to gemini-2.0-flash-exp to avoid quota issues with stable models
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-        console.log("📤 Sending prompt to Gemini...");
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
-        console.log("✅ Received response from Gemini");
+        console.log("📤 Sending prompt to Groq...");
+        const chatCompletion = await groq.chat.completions.create({
+            messages: [{ role: "user", content: prompt }],
+            model: "llama-3.1-8b-instant",
+        });
+        
+        const text = chatCompletion.choices[0]?.message?.content || "No response generated.";
+        console.log("✅ Received response from Groq");
 
         res.json({ suggestion: text });
 
