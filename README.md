@@ -2,7 +2,7 @@
 
 [![IoT](https://img.shields.io/badge/IoT-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
 [![Backend](https://img.shields.io/badge/Backend-Node.js-green.svg)](https://nodejs.org/)
-[![AI](https://img.shields.io/badge/AI-Gemini_2.0_Flash-orange.svg)](https://deepmind.google/technologies/gemini/)
+[![AI](https://img.shields.io/badge/AI-Groq-orange.svg)](https://console.groq.com/keys)
 [![Database](https://img.shields.io/badge/Database-MongoDB_Atlas-green.svg)](https://www.mongodb.com/cloud/atlas)
 
 A complete IoT-based solution for tracking student library attendance using RFID technology, featuring a real-time React dashboard and AI-powered study pattern suggestions.
