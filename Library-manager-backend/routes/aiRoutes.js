@@ -63,7 +63,7 @@ router.get("/analyze/:cardId", async (req, res) => {
             messages: [{ role: "user", content: prompt }],
             model: "llama-3.1-8b-instant",
         });
-        
+
         const text = chatCompletion.choices[0]?.message?.content || "No response generated.";
         console.log("✅ Received response from Groq");
 
