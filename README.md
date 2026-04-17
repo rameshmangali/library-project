@@ -49,7 +49,7 @@ graph TD
 - **Frontend**: React.js, Vanilla CSS, Lucide Icons
 - **Backend**: Node.js, Express.js, Mongoose
 - **Database**: MongoDB Atlas (Cloud)
-- **AI**: Google Generative AI (Gemini SDK)
+- **AI**: Groq AI (Gemini SDK)
 - **Hardware**: ESP32, RC522 RFID Module, 16x2 I2C LCD
 - **Language**: JavaScript (ES6+), C++ (Arduino IDE)
 
@@ -61,7 +61,7 @@ graph TD
 - [Node.js](https://nodejs.org/) (LTS)
 - [Arduino IDE](https://www.arduino.cc/en/software)
 - MongoDB Atlas Account
-- Gemini API Key
+- Groq API key
 
 ### 2. Backend Setup
 1. Navigate to `/Library-manager-backend`.
@@ -70,7 +70,7 @@ graph TD
    ```env
    PORT=5000
    MONGO_URI=your_mongodb_uri
-   GEMINI_API_KEY=your_api_key
+   GROQ_API_KEY=your_api_key
    ```
 4. Start the server: `npm start`.
 
